@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性和监视</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+
+</head>
+<body>
+    <!-- 
+        1.计算属性：
+            在computed属性对象中定义计算属性的方法
+            在页面中使用{{方法名}}来显示计算的结果
+        2.监视属性：
+            通过vm对象的$watch()或watch配置来监视指定的属性
+            当属性变化时，回调函数自动使用，在函数内部进行计算
+        3.计算属性高级：
+            通过getter/setter实现对属性数据的显示和监视
+            属性计算存在缓存，多次读取只能进行一次getter计算
+     -->
+
+     <div id="demo">
+        姓：<input type="text" placeholder="Last Name" v-model="lastname"> <br>
+        名：<input type="text" placeholder="First Name" v-model="firstname"><br>
+        姓名1（单向）：<input type="text" placeholder="Full Name1" v-model="fullname1"><br>
+        姓名2（单向）：<input type="text" placeholder="Full Name2" v-model="fullname2"><br>
+        姓名3（双向）：<input type="text" placeholder="Full Name3" v-model="fullname3">
+     </div>
+</body>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#demo",
+        data: {
+            lastname: "A",
+            firstname: "B",
+            //fullname1: "A B"
+            fullname2:"A B" //B此时没有被监视，修改无变动
+        },
+        computed:{ //计算属性
+            fullname1(){ //计算属性中的一个方法，方法的返回值作为属性值
+                        //  初始化的时候执行一次，相关数据变化时执行
+                        // 计算并返回当前属性的值
+                return this.lastname+' '+this.firstname;
+            },
+
+            fullname3:{
+                //get()是一个回调函数
+                //回调函数（你定义的，你没调用，但是最终被执行），计算并返回当前属性的值
+                //关于回调函数，要知道1.神恶魔时候调用，2.用来干嘛
+                //回调函数：需要读取当前属性值时回调，根据相关数据计算并返回当前属性的值（要看当前的值跟谁有关系）
+                get(){
+                    return this.lastname+' '+this.firstname;
+                },
+                //set()是一个回调函数，属性的值发生改变时调用，同时更新相关的属性数据
+                set(value){ //value就是fullname3的最新属性值
+                    const names = value.split(' '); //使用split()，返回一个数组
+                    this.lastname = names[0];
+                    this.firstname = names[1];
+                }
+
+                //get得到当前属性值，set监视并改变当前属性值
+            }
+        },// 另外的语法（监视）也可以实现
+        watch:{ //监视属性
+                //看监视的是哪个属性
+                //此时的监视是配置监视，Vue自带一种监视方法(实例方法)，$watch()
+            lastname: function(value){ //lastname发生了变化
+                console.log(this); //this就是vm对象
+                this.fullname2 = value+' '+this.firstname;
+            },
+        },
+    })
+
+    vm.$watch('firstname',function(value){
+        //用此方法更新fullname2
+        this.fullname2 = this.lastname+' '+value;
+    }) 
+    
+    //此时用了两个监视方法，完成了与计算属性同样的操作
+
+</script>
+<!-- 计算属性中存在缓存机制，讲计算结果缓存起来，下次调用时直接使用
+    多次读取只需要一次getter计算。
+    getter：属性的get方法
+    setter：属性的set方法
+-->
+</html>

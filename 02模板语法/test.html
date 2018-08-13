@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板语法</title>
+</head>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+
+<body>
+    <!-- 
+        1.模板的理解：
+        动态的html页面
+        包含JS语法代码
+        指令（以v-为开头的自定义标签属性）
+        2.双花括号表达式
+        语法：{{exp}}或{{{exp}}}
+        功能：向页面输出数据
+        可以调用对象的方法
+        3.指令一：强制数据绑定
+        功能：完成变化的属性值
+        完整写法：
+            v-bind:xxx='yyy' //yyy会作为表达式解析执行
+        简洁写法：
+            :xxx='yyy'
+        4.指令二：绑定事件监听
+        功能：绑定指定事件名的回调函数
+        完整写法：
+            v-on:click='xxx'
+        简洁写法：
+            @click='xxx'
+     -->
+
+     <div id="app">
+        <h2>1.双花括号表达式</h2>
+        <p>{{msg}}</p>
+        <p>{{msg.toUpperCase()}}</p>
+        <p>{{msg.toLowerCase()}}</p>
+        <p v-html="link"></p> <!-- innerHTML --> 
+        <p v-text="link"></p> <!-- innerText -->
+        
+        <h2>2.指令一：强制数据绑定</h2>
+        <img src="imgUrl"> <!-- 无效-->
+        <img v-bind:src="imgUrl"> <!-- 强制绑定-->
+        <h2>3.指令二：绑定事件监听</h2>
+        <button v-on:click="test1">Test1</button>
+        <button v-on:click="test2(msg)">Test2</button>
+     </div>
+</body>
+<script type="text/javascript">
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            msg: 'mmmMMMmmm',
+            link:'<a href="http://www.bilibili.com">b站</a>',
+            imgUrl: 'http://img3.imgtn.bdimg.com/it/u=3553915571,764146430&fm=27&gp=0.jpg',
+        },
+        // 所有事件的回调函数，写在另外一个配置里面，methods
+        methods:{ //ES6语法
+            test1(){
+                alert("111");
+            },
+            test2(content){
+                alert(content);
+            }
+        },
+    })
+</script>
+</html>

@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>条件渲染</title>
+</head>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+
+<body>
+    <!-- 
+        1.条件渲染指令
+        v-if
+        v-else
+        v-show
+        用来实现对标签的显示或隐藏
+
+        2.比较v-if与v-show
+        如果需要频繁切换，v-show比较好
+     -->
+    <div id="demo">
+        <p v-if="ok">Success</p>
+        <p v-else>Failure</p>
+        <!-- 切换状态 -->
+        <p v-show="ok">666666</p>
+        <p v-show="!ok">333333</p>
+        <button @click="ok=!ok">Swicth Statement</button>
+        <!-- v-if/v-else和v-show隐藏标签的方法不一样
+                v-show隐藏标签后。还存在内存中只是不显示
+                前者隐藏标签后会从内存中删除
+                频繁切换使用v-show比较好
+        -->
+    </div>
+</body>
+<script type="text/javascript">
+    const vm = new Vue({
+        el: "#demo",
+        data: {
+            ok: false,
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,15 @@
+配置文件
+build
+config
+
+依赖
+node_modules
+
+源码目录
+src
+项目入口：main.js
+
+静态文件（包含.gitkeep）
+static
+
+babelrc：es6转es5/jsx转js（rc：runtime control）

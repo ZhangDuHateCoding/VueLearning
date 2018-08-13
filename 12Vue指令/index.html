@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue内置指令</title>
+</head>
+<style>
+    [v-cloak]{
+        display:none;
+    }
+</style>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+<body>
+    <!-- 
+        常用内置指令
+            V:text: Update elments' textContent
+            v-html: update elements' innerHTML
+            v-if: The tags will be appear on the page when the value is true
+            v-else: The tags will be appear on the page when the value is false
+            v-show: Contorl the showing or hiding of tags by setting the "display"
+            v-for:遍历数组/对象
+            v-on:绑定事件监听，一般简写为@
+            v-bind:强制绑定解析表达式，可省略v-bind
+            v-model:双向数据绑定
+            ref:为某个元素注册一个唯一标识，vue对象通过$els属性访问这个元素
+            v-cloak:防止闪现表达式，与css配合：[v-cloak]{display:none} 
+     -->
+     <div id="demo">
+         <!-- 为p标签添加标识符 -->
+        <p ref="content">Hello</p>
+        <button @click="tips">Tips</button>
+        <p v-cloak>{{msg}}</p>
+     </div>
+</body>
+<script type="text/javascript">
+    
+    const vm = new Vue({
+        el: "#demo",
+        data: {
+            msg:"lalalalalalala",
+        },
+        methods:{
+            tips(){
+                alert(this.$refs.content.textContent);
+            }
+        }
+    })
+</script>
+</html>

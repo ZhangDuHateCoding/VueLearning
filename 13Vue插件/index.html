@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue插件</title>
+</head>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+<script type="text/javascript" src="./vue-myPlugin.js"></script>
+<body>
+    <div id="demo">
+        <p v-my-directive="msg"></p>
+    </div>
+</body>
+<script type="text/javascript">
+//声名使用插件
+Vue.use(MyPlugin);//此时会执行MyPlugin中的install(Vue)
+Vue.myGlobalMethod();
+const vm = new Vue({
+    el: "#demo",
+    data: {
+        msg: "I like you!"
+    },
+})
+
+vm.$myMethod()
+//此时页面显示两个console.log打印以及一条页面输出
+</script>
+</html>

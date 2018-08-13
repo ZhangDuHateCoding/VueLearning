@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件处理</title>
+</head>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+<body>
+    <!-- 
+        1.绑定监听
+        v-on:xxx="fun"
+        @xxx="fun"
+        @xxx="fun(参数)"
+        默认事件形参：event
+        隐含属性对象：$event
+
+        2.事件修饰符
+        .prevent:阻止事件的默认行为 event.preventDefault()
+        .stop:阻止事件冒泡 event.stopPropogation()
+
+        3.按键修饰符
+        .keycode:操作的是某个keycode值的键
+        .enter:操作的是enter键
+
+     -->
+    <div id="example">
+        <h2>1.事件监听</h2>
+            <button @click="test1">test1</button>
+            <button @click="test2('123')">test2</button>
+            <button @click="test3">test3</button>
+            <button @click="test4(123, $event)">test4</button>
+        <h2>2.事件修饰符</h2>
+        <!-- div嵌套 -->
+            <div style="width: 100px; height: 100px;background: pink" @click="test5">
+                <div style="width: 50px; height: 50px;background: dodgerblue" @click.stop="test6"></div>
+                <!-- 此时希望点击内部div而不触发外部div事件，所以阻止事件冒泡 -->
+            </div>
+            
+            <a href="https://www.bilibili.com/" @click.prevent="test7">去b站</a>
+            <!-- 此时只弹窗，不执行a标签的默认功能 -->
+            
+        <h2>3.按键修饰符</h2>
+        <!-- @keyup:按键起来使触发事件 -->
+        <input type="text" @keyup.13="test8">
+        <!-- 此时修饰成按enter键才触发事件 -->
+        <!-- 直接在@keycode后添加.keycode -->
+        <input type="text" @keyup.enter="test8">
+        <!-- 记不住keycode可以输入名字 -->
+    </div>
+</body>
+<script type="text/javascript">
+    const vm = new Vue({
+        el: "#example",
+        data: {
+            test1(){
+                alert("hahahahah");
+            },
+            test2(msg){
+                alert(msg);
+            },
+            test3(event){
+                alert(event.target.innerHTML);
+            },
+            test4(number, event){
+                alert(number+"---"+event.target.innerHTML);
+            },
+            test5(){
+                alert("outer");
+            },
+            test6(){
+                //原生方法：event.stopPropogation()
+                alert("inner");
+            },
+            test7(){
+                //原生方法：event.preventDefault()
+                alert("先弹出来");
+            },
+            test8(event){
+                //原生方法
+                // if(event.keyCode===13){
+                //     alert(event.target.value);
+                // }
+                alert(event.target.value);
+                
+            }
+        }
+    })
+</script>
+</html>

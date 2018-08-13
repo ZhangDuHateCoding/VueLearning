@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue实例生命周期</title>
+</head>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+
+<body>
+    <!-- 
+        Vue生命周期，三个阶段
+        一. 初始化显示
+        beforeCreate()
+        created()
+        beforeMounted()
+        mounted()
+        二. 更新显示
+        beforeUpdate()
+        updated()
+        三. 死亡(销毁vue实例：vm.$destroyed)
+        beforeDestroy()
+        destroyed()
+
+
+        常用的生命周期方法：
+        created()/mounted():发送ajax请求，启动定时器等异步工作
+        beforeDestroy() 如销毁定时器等
+
+        重点：mounted()和beforeDestroyed()
+
+     -->
+    <div>
+        <div id="demo">
+            <button @click="destroyVM">Destroy vm</button>
+            <!-- 让下面文字每隔一秒显示一次 -->
+            <!-- 使用循环定时器 -->
+            <p v-show="isShow">I am Vue</p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    const vm = new Vue({
+        el: "#demo",
+        data: {
+            isShow: true,
+        },
+        //1.初始化阶段
+        beforeCreate() {
+            console.log("beforeCreate()")
+        },
+        created() {
+            console.log("created()")
+            
+        },
+        beforeMount() {
+            console.log("beforeMount()")
+
+        },
+        mounted() { //初始化时调用，可调用无限次
+            //mounted 挂载
+            //初始化之后立即调用
+            //只要是回调函数就用箭头函数=>,(ES6新增箭头函数)
+            //箭头函数用来定义匿名函数
+            //特点：内部没有自己的this，只能使用外部的this(vm对象)
+            this.intervalId = setInterval(()=>{
+                console.log("mounted()");//此时vm被销毁时，发生内存泄漏，需要清楚定时器防止内存泄漏
+                this.isShow = !this.isShow; //更新数据
+            }, 500)
+        },
+        //2.更新阶段
+        beforeUpdate() {
+            console.log("beforeUpdate()")
+        },
+        updated() {
+            console.log("updated()")
+        },
+        //3.销毁阶段
+        beforeDestroy() { //死亡之前调用一次
+            //清除定时器
+            //定时器不会随着vm的销毁而销毁，需要手动销毁
+            //若不清除，会发生内存泄漏
+            clearInterval(this.intervalId);
+            //需要在beforeDestroy时调用，不要在destroyed后调用
+            console.log("beforeDestroyed()")
+        },
+        destroyed() {
+            console.log("destroyed()")
+        },
+        methods:{
+            destroyVM(){
+                //销毁vm
+
+                this.$destroy();
+            },
+        },
+    });
+
+    
+</script>
+</html>             

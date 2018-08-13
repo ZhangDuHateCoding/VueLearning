@@ -1,0 +1,8 @@
+ESlint实现代码规范性检查
+在内部定义了n个规则
+违反规则会打印提示规则信息
+
+在.eslintrc.js和.eslintignore中修改配置去忽略这些操蛋的规则
+rules:{
+
+}

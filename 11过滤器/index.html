@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>过滤器</title>
+</head>
+<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/moment.js/2.22.1/moment.js"></script>
+<body>
+    <!-- 
+        过滤器：主要运用在时间格式上
+        1. 定义过滤器
+        Vue.filter(filterName, function(value[arg1,arg2,...])){
+            进行一定的数据处理
+            return newValue
+        }
+
+        2. 使用过滤器
+        <div>{{myData | filterName}}</div>
+        <div>{{myData | filterName(arg)}}<div>
+     -->
+
+     <div id="demo">
+        <h2>原生日期与时间</h2>
+        <p>{{date}}</p>
+        <h2>显示格式化日期与时间</h2>
+        <p>完整日期：{{date | dateStr}}</p>
+        <p>年月日：{{date | dateStr('YYYY-MM-DD')}}</p>
+        <p>时分秒：{{date | dateStr('HH:mm:ss')}}</p>
+        <!-- dateStr后的值和format参数对应 -->
+     </div>
+</body>
+<script type="text/javascript">   
+    //自定义过滤
+    //function中第一个参数携带日期，第二个参数携带格式
+    Vue.filter('dateStr', function(value,format){
+        if(!format){
+            return moment(value).format('YYYY-MM-DD HH:mm:ss');
+        }else{
+            return moment(value).format(format);
+        }
+    })
+    const vm = new Vue({
+        el: "#demo",
+        data: {
+            date: new Date(),
+        },
+    })
+
+    
+    
+</script>
+</html>
