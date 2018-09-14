@@ -2,7 +2,7 @@
 <!-- div标签是固定结构 -->
    <li class="list-group-item">
         <div class="handle">
-            <a href="javascript:;">删除</a>
+            <a @click="deleteItem">删除</a>
         </div>
         <p class="user"><span>{{comment.name}}</span><span>说：</span></p>
         <p class="sentence">{{comment.content}}</p>
@@ -15,8 +15,19 @@
     //声明要读取的属性
     //props: ['comment'] //此种方式只指定了属性名
     props:{ // 此种方式指定了属性名和属性值的类型
-        comment: Object
-    }// 此时组件对象上已有comment属性，动态显示即可
+        comment: Object,
+        deleteComment: Function,
+        index:Number
+    },// 此时组件对象上已有comment属性，动态显示即可
+
+    methods:{
+        deleteItem(){
+            const {comment, index, deleteComment} = this
+            if(window.confirm(`确定删除${comment.name}的评论码？`)){
+                deleteComment(index)//此时index没有传过来，需要List组件传递index，且在本组件中声明
+            }
+         }
+    }
   }
 
 </script>

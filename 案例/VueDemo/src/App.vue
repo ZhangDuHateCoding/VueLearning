@@ -11,8 +11,8 @@
         </div>
     </header>
     <div class="container">
-        <Add/>
-        <List :comments='comments'/>
+        <Add :addComment='addComment'/>
+        <List :comments='comments' :deleteComment='deleteComment'/>
     </div>
    </div>
 
@@ -28,15 +28,15 @@ export default {// 固定写法，向外暴露一个配置对象(与Vue一致，
             comments:[
                 {
                     name:"Bob",
-                    content:"Vue还不错1"
+                    content:"Vue comment1"
                 },
                 {
                     name:"Alice",
-                    content:"Vue还不错2"
+                    content:"Vue comment2"
                 },
                 {
                     name:"Coco",
-                    content:"Vue还不错3"
+                    content:"Vue comment3"
                 },
             ]
         }
@@ -45,7 +45,23 @@ export default {// 固定写法，向外暴露一个配置对象(与Vue一致，
   components: {
     Add,
     List
-  }
+  },
+  // 数据在哪个组件，操作数据的行为(方法)就应该定义在哪个组件
+  // 添加评论
+  methods:{
+      // 添加评论
+      addComment(comment){ //接收参数comment,且该方法App.vue组件自己不调用，需要传递给子组件Add使用 :addComment='addComment'
+      // 并在Add.vue组件中用props属性接收该方法
+        this.comments.unshift(comment)
+      },
+      // 删除指定下标的评论
+      deleteComment(index){
+          this.comments.splice(index, 1)
+      }
+
+  },
+ 
+
 }
 
 </script>
