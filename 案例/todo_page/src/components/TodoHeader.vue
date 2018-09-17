@@ -1,7 +1,8 @@
 <template>
 <!-- div标签是固定结构 -->
    <div class="todo-header">
-        <input type="text" placeholder="请输入事项，按回车键确认" @keyup.enter="addItem" v-model="title" />
+        <input type="text" placeholder="请输入任务，按回车键或确定添加" @keyup.enter="addItem" v-model="title" />
+        <button type="button" @click="addItem">确定</button>
     </div>
 
 </template>

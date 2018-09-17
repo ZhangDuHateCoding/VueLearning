@@ -10,13 +10,18 @@ padding: 10px;
 border: 1px solid #ddd;
 border-radius: 5px;
 }
-.todo-header input {
-    width: 560px;
+.todo-header input{
+    width: 500px;
     height: 28px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 4px 7px;
+    display: inline-block;
+}
+.todo-header button{
+  width: 50px;
+  display: inline-block;
 }
 
 /* header */
@@ -89,7 +94,7 @@ li {
 
   li button {
     float: right;
-    display: none;
+    /* display: none; */
     margin-top: 3px;
   }
 
